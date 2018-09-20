@@ -1,0 +1,7 @@
+<block wx:if="{{!isChooseCity}}">
+    <view style="margin: 200rpx auto;text-align:center;font-size:50rpx;">您选择的城市是: {{city.name}}</view>
+    <button class="btn" type="primary" bindtap="chooseCity">点击选择城市</button>
+</block>
+<view wx:else>
+    <city-choose haveHistory="{{false}}" catch:confirm="confirm" />
+</view>

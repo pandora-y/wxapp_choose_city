@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "city-choose": "plugin://myPlugin/citys"
+    }
+}
