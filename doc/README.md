@@ -1,6 +1,4 @@
-# 预览
-
-![预览图](./preview.gif)
+本插件已开源：[https://github.com/zh28/wxapp_choose_city](https://github.com/zh28/wxapp_choose_city)
 
 # 属性
 
@@ -41,3 +39,7 @@ Page({
     }
 });
 ```
+
+# 预览
+
+![预览图](./preview.gif)
