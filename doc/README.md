@@ -19,11 +19,25 @@
 
 # 示例
 
+```json
+// index.json
+
+{
+    "navigationBarTitleText": "选择城市",
+    "usingComponents": {
+        "city-choose": "plugin://chooseCity/citys"
+    }
+}
+
+```
+
 ```html
+<!-- index.wxml -->
 <city-choose haveHistory="{{false}}" catch:confirm="confirm" />
 ```
 
 ```javascript
+// index.js
 Page({
     confirm({ detail }) {
         console.log(detail);

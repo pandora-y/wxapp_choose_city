@@ -5,6 +5,11 @@ Component({
         haveHistory: {
             type: Boolean,
             value: true
+        },
+
+        scrollWithAnimation: {
+            type: Boolean,
+            value: true
         }
     },
     data: {

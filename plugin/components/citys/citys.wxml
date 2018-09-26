@@ -12,7 +12,7 @@
         {{item[0]}}
     </view>
 </view>
-<scroll-view scroll-y="{{true}}" class="city-scroll" scroll-into-view="{{scrollWord}}" scroll-with-animation="{{true}}">
+<scroll-view scroll-y="{{true}}" class="city-scroll" scroll-into-view="{{scrollWord}}" scroll-with-animation="{{scrollWithAnimation}}">
     <view hidden="{{searchRes.length>0}}">
         <view id="location" class="tag">当前</view>
         <view class="citys-box">
