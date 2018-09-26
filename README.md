@@ -24,7 +24,7 @@
 # 示例
 
 ```html
-<city-choose haveHistory="{{false}}" catch:confirm="confirm" />
+<city-choose haveHistory="{{false}}" scrollWithAnimation="{{false}}" catch:confirm="confirm" />
 ```
 
 ```javascript
