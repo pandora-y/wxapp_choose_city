@@ -84,7 +84,6 @@ Page {
 
 .city-scroll {
     margin-top: 100rpx;
-    height: 92vh;
 }
 
 .tag {

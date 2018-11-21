@@ -1,5 +1,3 @@
-const flatMap = (arr, callback) => arr.reduce((a, x) => a.concat(callback), []);
-
 Component({
     properties: {
         haveHistory: {
@@ -18,66 +16,87 @@ Component({
         locationCity: '',
         scrollWord: 'location',
         currentActive: 'location',
-        choosedCitys: void 0,
         searchRes: [],
-        historyCitys: void 0,
         remindHide: true,
-        remindWord: '...'
+        remindWord: '...',
+        scrollHeight: 500
     },
-    attached() {
-        new Promise((resolve, reject) => {
-            wx.showLoading({
-                title: '获取数据...',
-                mask: true
-            });
-            wx.request({
-                url: 'https://www.zhipin.com/common/data/city.json',
-                method: 'GET',
-                dataType: 'json',
-                success: resolve,
-                fail: reject
-            });
-        })
-            .then(({ data }) => {
-                if (data.resmsg === '请求成功') {
-                    const result = [];
-                    for (const { subLevelModelList } of data.data.cityList) {
-                        for (const city of subLevelModelList) {
-                            const findRes = result.find(
-                                v => v[0] === city.firstChar.toUpperCase()
-                            );
-                            if (findRes) {
-                                findRes[1].push(city);
-                            } else {
-                                result.push([
-                                    city.firstChar.toUpperCase(),
-                                    [city]
-                                ]);
+    lifetimes: {
+        created() {
+            return new Promise((resolve, reject) => {
+                wx.showLoading({
+                    title: '获取数据...',
+                    mask: true
+                });
+                wx.request({
+                    url: 'https://www.zhipin.com/common/data/city.json',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: resolve,
+                    fail: reject
+                });
+            })
+                .then(({ data }) => {
+                    if (data.resmsg === '请求成功') {
+                        const result = [];
+                        for (const { subLevelModelList } of data.data
+                            .cityList) {
+                            for (const city of subLevelModelList) {
+                                const findRes = result.find(
+                                    v => v[0] === city.firstChar.toUpperCase()
+                                );
+                                if (findRes) {
+                                    findRes[1].push(city);
+                                } else {
+                                    result.push([
+                                        city.firstChar.toUpperCase(),
+                                        [city]
+                                    ]);
+                                }
                             }
                         }
+                        this.citys = result.sort();
+                        this.historyCitys =
+                            wx.getStorageSync('$city_choose_history') || [];
+                        this.setData(
+                            {
+                                locationCity: data.data.locationCity,
+                                hotCitys: data.data.hotCityList.splice(1),
+                                ...this.diff('citys', this.citys),
+                                ...this.diff(
+                                    'historyCitys',
+                                    this.historyCitys.reverse()
+                                ),
+                                choosedCitys: data.data.locationCity
+                            },
+                            wx.hideLoading
+                        );
+                    } else {
+                        wx.showToast({
+                            title: '请求错误',
+                            icon: 'none',
+                            duration: 1500
+                        });
                     }
-                    this.citys = result.sort();
-                    this.historyCitys =
-                        wx.getStorageSync('$city_choose_history') || [];
-                    this.setData(
-                        {
-                            locationCity: data.data.locationCity,
-                            hotCitys: data.data.hotCityList.splice(1),
-                            citys: this.citys,
-                            choosedCitys: data.data.locationCity,
-                            historyCitys: this.historyCitys.reverse()
-                        },
-                        wx.hideLoading
+                }, console.error)
+                .catch(console.error);
+        },
+        attached() {
+            return new Promise(resolve =>
+                wx.getSystemInfo({ success: resolve })
+            )
+                .then(({ windowHeight }) => {
+                    const query = wx.createSelectorQuery().in(this);
+                    query.select('#scroll-view').boundingClientRect();
+                    query.selectViewport();
+                    query.exec(res =>
+                        this.setData({
+                            scrollHeight: windowHeight - res[0].top
+                        })
                     );
-                } else {
-                    wx.showToast({
-                        title: '请求错误',
-                        icon: 'none',
-                        duration: 1500
-                    });
-                }
-            }, console.error)
-            .catch(console.error);
+                })
+                .catch(console.error);
+        }
     },
 
     methods: {
@@ -135,6 +154,15 @@ Component({
                 data: this.historyCitys
             });
             this.triggerEvent('confirm', choosedCitys);
-        }
+        },
+
+        /**
+         * 优化setData数据
+         */
+        diff: (key, arr) =>
+            arr.reduce(
+                (data, v, i) => Object.assign(data, { [`${key}[${i}]`]: v }),
+                {}
+            )
     }
 });

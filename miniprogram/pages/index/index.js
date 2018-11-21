@@ -1,9 +1,8 @@
 Page({
     data: {
-        isChooseCity: false
+        isChooseCity: false,
+        testArr: []
     },
-
-    onLoad: function() {},
 
     chooseCity() {
         this.setData({
