@@ -19,40 +19,58 @@
 
 # 示例
 
-```json
-// index.json
+* app.json
 
-{
-    "navigationBarTitleText": "选择城市",
-    "usingComponents": {
-        "city-choose": "plugin://chooseCity/citys"
-    }
-}
+  ```json
+  {
+      "plugins": {
+          "chooseCity": {
+              "version": "1.0.0",
+              "provider": "wxcdf8cca1bde64773"
+          }
+      }
+  }
+  ```
 
-```
 
-```html
-<!-- index.wxml -->
-<city-choose haveHistory="{{false}}" catch:confirm="confirm" />
-```
+* index.json
 
-```javascript
-// index.js
-Page({
-    confirm({ detail }) {
-        console.log(detail);
-        /*
-        {
-            code: 101280600,
-            firstChar: "s",
-            name: "深圳",
-            rank: 0,
-            subLevelModelList: null
-        }
-        */
-    }
-});
-```
+  ```json
+  {
+      "navigationBarTitleText": "选择城市",
+      "usingComponents": {
+          "city-choose": "plugin://chooseCity/citys"
+      }
+  }
+  ```
+
+
+* index.wxml
+
+  ```html
+  <city-choose have-history="{{false}}" catch:confirm="confirm" />
+  ```
+
+* index.js
+
+  ```js
+  Page({
+      confirm({ detail }) {
+          console.log(detail);
+          /*
+          输出：
+          {
+              code: 101280600,
+              firstChar: "s",
+              name: "深圳",
+              rank: 0,
+              subLevelModelList: null
+          }
+          */
+      }
+  });
+  ```
+
 
 # 预览
 

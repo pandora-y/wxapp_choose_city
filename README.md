@@ -1,8 +1,4 @@
-> 插件名称：城市选择组件，在申请插件页面搜索即可，无需确认，即添即用。
-
-# 预览
-
-![预览图](./doc/preview.gif)
+本插件已开源：[https://github.com/zh28/wxapp_choose_city](https://github.com/zh28/wxapp_choose_city)
 
 # 属性
 
@@ -23,23 +19,59 @@
 
 # 示例
 
-```html
-<city-choose haveHistory="{{false}}" scrollWithAnimation="{{false}}" catch:confirm="confirm" />
-```
+* app.json
 
-```javascript
-Page({
-    confirm({ detail }) {
-        console.log(detail);
-        /*
-        {
-            code: 101280600,
-            firstChar: "s",
-            name: "深圳",
-            rank: 0,
-            subLevelModelList: null
-        }
-        */
-    }
-});
-```
+  ```json
+  {
+      "plugins": {
+          "chooseCity": {
+              "version": "1.0.0",
+              "provider": "wxcdf8cca1bde64773"
+          }
+      }
+  }
+  ```
+
+
+* index.json
+
+  ```json
+  {
+      "navigationBarTitleText": "选择城市",
+      "usingComponents": {
+          "city-choose": "plugin://chooseCity/citys"
+      }
+  }
+  ```
+
+
+* index.wxml
+
+  ```html
+  <city-choose have-history="{{false}}" catch:confirm="confirm" />
+  ```
+
+* index.js
+
+  ```js
+  Page({
+      confirm({ detail }) {
+          console.log(detail);
+          /*
+          输出：
+          {
+              code: 101280600,
+              firstChar: "s",
+              name: "深圳",
+              rank: 0,
+              subLevelModelList: null
+          }
+          */
+      }
+  });
+  ```
+
+
+# 预览
+
+![预览图](./preview.gif)
