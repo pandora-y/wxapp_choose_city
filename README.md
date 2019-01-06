@@ -74,4 +74,4 @@
 
 # 预览
 
-![预览图](./preview.gif)
+![预览图](https://mmbiz.qpic.cn/mmbiz_gif/lgHPYChuCFb2hOC2ydQtPY5lvCOSiaOdzQ97IhVTmQ5QQdQV8Fibr7sw6xibicNWsRVuenETorj3HDTM4HVpGkS7og/0)
